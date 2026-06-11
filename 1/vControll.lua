@@ -7,7 +7,7 @@
 local MODEM_SIDE = "left"     -- 💡 기체 컴퓨터에 무선/엔더 모뎀이 장착된 방향
 local CHANNEL = 55           -- 💡 원격 조종기와 맞출 무선 채널 번호
 
-TARGET_ALT = sublevel.getLogicalPose().position.y -- 목표 고도 (미터 단위)
+local TARGET_ALT = sublevel.getLogicalPose().position.y
 
 -- Create 모드의 회전 속도 컨트롤러(RPM 제어기) 주변기기 이름
 local MOTOR_FL = "Create_RotationSpeedController_5" 
@@ -236,7 +236,12 @@ local function inputLoop()
     end
 end
 
-return {
+local M = {
     controlLoop = controlLoop,
-    inputLoop = inputLoop
+    inputLoop = inputLoop,
+    -- 외부에서 이 값을 직접 읽거나 수정할 수 있도록 연결통로 개설
+    getTargetAlt = function() return TARGET_ALT end,
+    setTargetAlt = function(val) TARGET_ALT = val end
 }
+
+return M

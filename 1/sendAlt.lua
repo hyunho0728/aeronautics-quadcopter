@@ -7,7 +7,7 @@ if not modem then
     error("Not found Modem on side: " .. MODEM_SIDE) 
 end
 
--- vControll의 TARGET_ALT를 읽어오기 위해 모듈 참조
+-- vControll 모듈을 가져옵니다.
 local vControll = require("vControll")
 
 local function mainLoop()
@@ -17,8 +17,11 @@ local function mainLoop()
         local pose = sublevel.getLogicalPose()
         local currentAlt = pose.position.y
         
-        -- vControll.lua 안에서 갱신되는 TARGET_ALT 값을 전역 변수 형태로 참조
-        local targetAlt = _G.TARGET_ALT or 0 
+        -- 💡 [수정] 함수 호출을 통해 vControll 내부의 실시간 TARGET_ALT 값을 정확하게 가져옴
+        local targetAlt = 0
+        if vControll and type(vControll.getTargetAlt) == "function" then
+            targetAlt = vControll.getTargetAlt()
+        end
         
         local packet = {
             type = "TELEMETRY",
