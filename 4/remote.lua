@@ -8,17 +8,23 @@ if not modem then
 end
 modem.open(CHANNEL)
 
--- 💡 [수정] 포켓 컴퓨터 내부에 생성된 helpers 모듈을 올바르게 참조합니다.
--- 컴퓨터크래프트 환경에 따라 require("helpers") 또는 require("./helpers")를 사용합니다.
+-- 외부 파일 없이 안전하게 단독 구동되는 displayLine 내장
 local helpers = require("helpers")
 
--- 상단 계기판 UI 드로잉 함수 (helpers.displayLine 적용)
+-- 상단 계기판 UI 드로잉 함수 (커서 위치 원상복구 로직 추가)
 local function drawUI(curAlt, tarAlt, dist)
+    -- 💡 현재 사용자가 입력 중이던 커서의 원래 위치를 백업합니다.
+    local oldX, oldY = term.getCursorPos()
+
     helpers.displayLine(term, 1, "== Remote Monitor ==")
     helpers.displayLine(term, 2, string.format("Target : %6.2f m", tarAlt or 0))
     helpers.displayLine(term, 3, string.format("Current: %6.2f m", curAlt or 0))
     helpers.displayLine(term, 4, string.format("Error  : %+6.2f m", (tarAlt or 0) - (curAlt or 0)))
     helpers.displayLine(term, 5, string.format("Dist   : %6.1f m", dist or 0))
+
+    -- 💡 상단 출력이 끝나면 커서를 사용자가 타이핑하던 원래 자리로 즉시 돌려놓습니다.
+    -- 이 코드가 있어야 main이 켜져서 0.1초마다 화면을 갱신해도 입력창이 깨지지 않습니다.
+    term.setCursorPos(oldX, oldY)
 end
 
 -- [스레드 1] 실시간 고도 수신 루프
@@ -32,23 +38,21 @@ local function receiveLoop()
     end
 end
 
--- [스레드 2] 사용자 고도 조작 입력 루프 (read 버퍼 간섭 완벽 해결)
+-- [스레드 2] 사용자 고도 조작 입력 루프
 local function inputLoop()
     while true do
-        -- 💡 6번 줄을 공백으로 밀어두어 read() 실행 시 상단 계기판이 깨지는 것을 격리
+        -- 완충 지대 설정 및 하단 가이드라인 고정
         helpers.displayLine(term, 6, "")
-
-        -- 💡 가이드라인 도움말은 read() 버퍼의 영향을 받지 않도록 아래쪽(9~10번 줄)에 배치
         helpers.displayLine(term, 9, "--------------------")
         helpers.displayLine(term, 10, "Ex: 70, +1, -2, exit")
         
-        -- 💡 입력창 위치를 7번 줄로 확실하게 고정
+        -- 입력창 위치 잡기
         term.setCursorPos(1, 7)
         term.clearLine()
         io.write("> ")
+        
         local input = read()
         
-        -- 💡 전송 결과 메시지는 화면 가장 하단인 12번 줄 안전지대에서 출력
         if input == "exit" then
             local exitPacket = { type = "EXIT" }
             modem.transmit(CHANNEL, CHANNEL, exitPacket)
@@ -86,7 +90,6 @@ local function inputLoop()
             end
         end
         
-        -- 루프가 끝나기 전 결과 안내 라인 깔끔하게 청소
         helpers.displayLine(term, 12, "")
     end
 end
