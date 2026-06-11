@@ -8,9 +8,9 @@ if not modem then
 end
 modem.open(CHANNEL)
 
--- 화면 UI를 그려주는 전용 함수
+-- 상단 계기판 UI 드로잉 함수
 local function drawUI(curAlt, tarAlt, dist)
-    -- 입력창(화면 하단)을 방해하지 않고 상단 1~6줄만 청소 후 갱신
+    -- 입력창 라인을 제외한 상단 1~6번 줄만 골라서 지우고 갱신
     for i = 1, 6 do
         term.setCursorPos(1, i)
         term.clearLine()
@@ -25,7 +25,7 @@ local function drawUI(curAlt, tarAlt, dist)
     print("-----------------------------------")
 end
 
--- [스레드 1] 실시간 고도 수신 루프
+-- [스레드 1] 1/sendAlt.lua가 보내주는 실시간 고도를 수신하여 화면 상단에 갱신
 local function receiveLoop()
     while true do
         local event, side, channel, replyChannel, packet, distance = os.pullEvent("modem_message")
@@ -36,10 +36,10 @@ local function receiveLoop()
     end
 end
 
--- [스레드 2] 사용자 키보드 입력 및 조작 루프
+-- [스레드 2] 사용자 고도 조작 입력 루프
 local function inputLoop()
     while true do
-        -- 하단 입력 위치 고정 (7번째 줄부터 입력)
+        -- 하단 7~9번째 줄에 입력 프롬프트 배치
         term.setCursorPos(1, 7)
         term.clearLine()
         print("Enter absolute(e.g. 70), relative(e.g. +1, -2) or 'exit'")
@@ -56,7 +56,7 @@ local function inputLoop()
             break
         end
         
-        -- 상대 고도 패턴 매칭 (+ 또는 -로 시작하는지 확인)
+        -- 상대 고도 패턴 매칭 (+ 혹은 - 부호 검사)
         local sign, valueStr = input:match("^([%+%-])(%d+%.?%d*)$")
         
         if sign and valueStr then
@@ -73,7 +73,7 @@ local function inputLoop()
             print(string.format(">> Sent relative: %+gm", num))
             sleep(0.5)
         else
-            -- 절대 고도 입력 처리
+            -- 절대 고도 숫자 처리
             local num = tonumber(input)
             if num then
                 local packet = {
@@ -95,7 +95,7 @@ local function inputLoop()
     end
 end
 
--- 메인 실행부: 수신과 입력을 병렬로 동시에 실행
+-- 메인 실행부
 term.clear()
 drawUI(0, 0, 0)
 parallel.waitForAny(receiveLoop, inputLoop)
