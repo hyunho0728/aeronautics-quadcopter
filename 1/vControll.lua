@@ -7,7 +7,7 @@
 local MODEM_SIDE = "left"     -- 💡 기체 컴퓨터에 무선/엔더 모뎀이 장착된 방향
 local CHANNEL = 55           -- 💡 원격 조종기와 맞출 무선 채널 번호
 
-local TARGET_ALT = sublevel.getLogicalPose().position.y -- 목표 고도 (미터 단위)
+TARGET_ALT = sublevel.getLogicalPose().position.y -- 목표 고도 (미터 단위)
 
 -- Create 모드의 회전 속도 컨트롤러(RPM 제어기) 주변기기 이름
 local MOTOR_FL = "Create_RotationSpeedController_5" 
@@ -222,6 +222,15 @@ local function inputLoop()
                 relay.setAnalogueOutput("bottom", 15)
                 -- 함수를 종료(return)하여 parallel.waitForAny가 main 전체를 종료시키도록 함
                 return 
+            -- vControll.lua의 inputLoop 내부에 포함되어야 하는 로직
+            elseif packet.type == "ADD_ALT" then
+                local diff = tonumber(packet.value)
+                if diff then
+                    TARGET_ALT = TARGET_ALT + diff  -- 전역변수화된 TARGET_ALT 조작
+                    altPID.sp  = TARGET_ALT
+                    altPID.integral   = 0
+                    altPID.prev_error = 0
+                end
             end
         end
     end
