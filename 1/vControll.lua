@@ -187,17 +187,31 @@ local function inputLoop()
     while true do
         local event, side, channel, replyChannel, packet, distance = os.pullEvent("modem_message")
         
-        if type(packet) == "table" and packet.type == "SET_ALT" then
-            local newAlt = tonumber(packet.value)
+        if type(packet) == "table" then
+            -- 💡 고도 설정 명령 수신
+            if packet.type == "SET_ALT" then
+                local newAlt = tonumber(packet.value)
 
-            if newAlt then
-                TARGET_ALT = newAlt
-                altPID.sp  = newAlt   
-                altPID.integral   = 0 
-                altPID.prev_error = 0 
-                print("Received -> Set Target Alt: " .. newAlt .. " m (Dist: " .. string.format("%.1f", distance or 0) .. "m)")
-            else
-                print("Warning: Invalid height value received.")
+                if newAlt then
+                    TARGET_ALT = newAlt
+                    altPID.sp  = newAlt   
+                    altPID.integral   = 0 
+                    altPID.prev_error = 0 
+                    print("Received -> Set Target Alt: " .. newAlt .. " m (Dist: " .. string.format("%.1f", distance or 0) .. "m)")
+                else
+                    print("Warning: Invalid height value received.")
+                end
+                
+            -- 💡 원격 종료(EXIT) 명령 수신
+            elseif packet.type == "EXIT" then
+                print("\n[EXIT] Received exit command from remote.")
+                print("Stopping all motors and shutting down main system...")
+                
+                -- 안전을 위해 모든 모터의 목표 속도를 대기 속도(1)로 변경하여 정지 유도
+                setMotorSpeeds(1, 1, 1, 1) 
+                
+                -- 함수를 종료(return)하여 parallel.waitForAny가 main 전체를 종료시키도록 함
+                return 
             end
         end
     end
