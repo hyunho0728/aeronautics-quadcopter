@@ -1,0 +1,161 @@
+=== Network Device Scanner ===
+Found 18 device(s).
+
+>> Device Name: bottom
+   Type: modem
+   --- Available Methods ---
+   - callRemote
+   - getNameLocal
+   - transmit
+   - closeAll
+   - isOpen
+   - isWireless
+   - getMethodsRemote
+   - hasTypeRemote
+   - getNamesRemote
+   - close
+   - isPresentRemote
+   - open
+   - getTypeRemote
+
+>> Device Name: Create_RotationSpeedController_4
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_14
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_15
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_9
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_6
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_5
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_8
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_7
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_10
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_11
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_12
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: Create_RotationSpeedController_13
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: redstone_relay_14
+   Type: redstone_relay
+   --- Available Methods ---
+   - getBundledOutput
+   - setAnalogueOutput
+   - getBundledInput
+   - getInput
+   - getAnalogInput
+   - testBundledInput
+   - setAnalogOutput
+   - getAnalogOutput
+   - getAnalogueOutput
+   - getAnalogueInput
+   - setOutput
+   - getOutput
+   - setBundledOutput
+
+>> Device Name: back
+   Type: gimbal_sensor
+   --- Available Methods ---
+   - getAnglesRad
+   - getAngles
+
+>> Device Name: front
+   Type: navigation_table
+   --- Available Methods ---
+   - getRelativeAngleRad
+   - getRelativeAngle
+
+>> Device Name: right
+   Type: monitor
+   --- Available Methods ---
+   - getTextScale
+   - getTextColour
+   - getBackgroundColor
+   - setBackgroundColour
+   - getTextColor
+   - getCursorPos
+   - getPaletteColour
+   - getBackgroundColour
+   - isColor
+   - getCursorBlink
+   - clearLine
+   - setPaletteColor
+   - blit
+   - write
+   - setTextScale
+   - setBackgroundColor
+   - clear
+   - setTextColor
+   - scroll
+   - setCursorPos
+   - setCursorBlink
+   - getSize
+   - setTextColour
+   - setPaletteColour
+   - getPaletteColor
+   - isColour
+
+>> Device Name: left
+   Type: modem
+   --- Available Methods ---
+   - isOpen
+   - isWireless
+   - transmit
+   - closeAll
+   - close
+   - open
+
