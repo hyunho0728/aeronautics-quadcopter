@@ -183,7 +183,8 @@ local function controlLoop()
         helpers.displayLine(monitor, 13, string.format("Pres: %.2f Pa", pressure))
         helpers.displayLine(monitor, 14, string.format("VelY: %.2f m/s", velY))
         helpers.displayLine(monitor, 15, string.format("Current KD: %.1f", altPID.kd))
-
+        helpers.displayLine(monitor, 16, string.format("Pos.X: %.3f", pos.x))
+        helpers.displayLine(monitor, 17, string.format("Pos.Z: %.3f", pos.z))
         sleep(0.05)
     end
 end
