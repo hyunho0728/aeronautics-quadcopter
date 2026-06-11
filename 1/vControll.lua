@@ -16,7 +16,10 @@ local MOTOR_BL = "Create_RotationSpeedController_6"
 local MOTOR_BR = "Create_RotationSpeedController_7" 
 
 local GIMBAL_NAME = "back" 
-local MONITOR_SIDE = "right" 
+local MONITOR_SIDE = "right"
+
+-- 릴레이 이름
+REDSTONE_RELAY_NAME = "redstone_relay_14"
 
 -- 고도 PID 게인
 local ALT_KP = 3.0
@@ -55,6 +58,9 @@ local motorBR = peripheral.wrap(MOTOR_BR)
 -- 짐벌 센서 및 모니터 래핑
 local gimbal  = peripheral.wrap(GIMBAL_NAME)
 local monitor = peripheral.wrap(MONITOR_SIDE)
+
+-- 릴레이 연결
+local relay = peripheral.warp(REDSTONE_RELAY_NAME)
 
 -- 💡 [핵심 누락 수정] 순수 모뎀 연결 및 채널 오픈
 local modem = peripheral.wrap(MODEM_SIDE)
@@ -111,6 +117,9 @@ end
 local function controlLoop()
     local lastTime = os.clock()
     local prevVelY = 0
+
+    -- 엔진 시작용 레드스톤 링크 조작
+    relay.setAnalogueOutput("bottom", 0)
 
     while true do
         local now = os.clock()
@@ -208,8 +217,9 @@ local function inputLoop()
                 print("Stopping all motors and shutting down main system...")
                 
                 -- 안전을 위해 모든 모터의 목표 속도를 대기 속도(1)로 변경하여 정지 유도
-                setMotorSpeeds(1, 1, 1, 1) 
-                
+                setMotorSpeeds(1, 1, 1, 1)
+                -- 종료전에 엔진 종료
+                relay.setAnalogueOutput("bottom", 15)
                 -- 함수를 종료(return)하여 parallel.waitForAny가 main 전체를 종료시키도록 함
                 return 
             end
