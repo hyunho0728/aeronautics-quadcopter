@@ -1,5 +1,5 @@
 === Network Device Scanner ===
-Found 18 device(s).
+Found 19 device(s).
 
 >> Device Name: bottom
    Type: modem
@@ -36,6 +36,12 @@ Found 18 device(s).
    - setTargetSpeed
    - getTargetSpeed
 
+>> Device Name: Create_RotationSpeedController_16
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
 >> Device Name: Create_RotationSpeedController_9
    Type: Create_RotationSpeedController
    --- Available Methods ---
@@ -49,12 +55,6 @@ Found 18 device(s).
    - getTargetSpeed
 
 >> Device Name: Create_RotationSpeedController_5
-   Type: Create_RotationSpeedController
-   --- Available Methods ---
-   - setTargetSpeed
-   - getTargetSpeed
-
->> Device Name: Create_RotationSpeedController_8
    Type: Create_RotationSpeedController
    --- Available Methods ---
    - setTargetSpeed
@@ -84,12 +84,6 @@ Found 18 device(s).
    - setTargetSpeed
    - getTargetSpeed
 
->> Device Name: Create_RotationSpeedController_13
-   Type: Create_RotationSpeedController
-   --- Available Methods ---
-   - setTargetSpeed
-   - getTargetSpeed
-
 >> Device Name: redstone_relay_14
    Type: redstone_relay
    --- Available Methods ---
@@ -106,6 +100,17 @@ Found 18 device(s).
    - setOutput
    - getOutput
    - setBundledOutput
+
+>> Device Name: Create_RotationSpeedController_13
+   Type: Create_RotationSpeedController
+   --- Available Methods ---
+   - setTargetSpeed
+   - getTargetSpeed
+
+>> Device Name: docking_connector_0
+   Type: docking_connector
+   --- Available Methods ---
+   - getConnectedName
 
 >> Device Name: back
    Type: gimbal_sensor

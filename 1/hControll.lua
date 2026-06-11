@@ -25,7 +25,7 @@ local AnalogToSpeed = {1, 18, 35, 52, 69, 86, 103, 120, 137, 154, 171, 188, 205,
 --------------------------------------------------------------------------------
 -- 2. 주변기기 연결 및 PID 초기화
 --------------------------------------------------------------------------------
-local MOTER_B = peripheral.wrap("Create_RotationSpeedController_8")
+local MOTER_B = peripheral.wrap("Create_RotationSpeedController_16")
 local MOTER_R = peripheral.wrap("Create_RotationSpeedController_9")
 local MOTER_F = peripheral.wrap("Create_RotationSpeedController_10")
 local MOTER_L = peripheral.wrap("Create_RotationSpeedController_11")
