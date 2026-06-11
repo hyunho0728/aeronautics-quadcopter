@@ -60,7 +60,7 @@ local gimbal  = peripheral.wrap(GIMBAL_NAME)
 local monitor = peripheral.wrap(MONITOR_SIDE)
 
 -- 릴레이 연결
-local relay = peripheral.warp(REDSTONE_RELAY_NAME)
+local relay = peripheral.wrap(REDSTONE_RELAY_NAME)
 
 -- 💡 [핵심 누락 수정] 순수 모뎀 연결 및 채널 오픈
 local modem = peripheral.wrap(MODEM_SIDE)
