@@ -9,11 +9,25 @@ while true do
     print("=== Remote Altitude Controller ===")
     print("Channel: " .. CHANNEL)
     print("----------------------------------")
-    io.write("Enter new target altitude (m): ")
+    io.write("Enter new target altitude (m) or 'exit': ")
     
     local input = read()
     
+    -- 💡 "exit" 입력 시 기체 컴퓨터에도 종료 신호를 송신 후 원격 종료
     if input == "exit" then
+        local modem = peripheral.wrap(MODEM_SIDE)
+        if modem then
+            local exitPacket = {
+                type = "EXIT"
+            }
+            modem.transmit(CHANNEL, CHANNEL, exitPacket)
+            print(">> Transmitted EXIT command to drone.")
+            sleep(0.5)
+        else
+            print("Warning: Modem not found. Could not send EXIT command to drone.")
+            sleep(1)
+        end
+        
         print("Closing controller...")
         break
     end
@@ -22,7 +36,7 @@ while true do
     if num then
         local modem = peripheral.wrap(MODEM_SIDE)
         if modem then
-            -- 💡 vControll.lua 규격에 맞는 패킷 구조로 변경
+            -- 💡 vControll.lua 규격에 맞는 패킷 구조
             local packet = {
                 type = "SET_ALT",
                 value = num
