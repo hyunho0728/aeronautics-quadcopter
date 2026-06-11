@@ -4,7 +4,7 @@ local DEFAULT_ANGLE = 90 -- 조립 후 동쪽을 바라봤을때 각도 (0 ~ 360
 
 local MOTER_FL = peripheral.wrap("Create_RotationSpeedController_15") -- 전방 좌측 (북향)
 local MOTER_FR = peripheral.wrap("Create_RotationSpeedController_14") -- 전방 우측 (남향)
-local MOTER_BL = peripheral.wrap("Create_RotationSpeedController_12") -- 후방 좌측 (북향)
+local MOTER_BL = peripheral.wrap("Create_RotationSpeedController_17") -- 후방 좌측 (북향)
 local MOTER_BR = peripheral.wrap("Create_RotationSpeedController_13") -- 후방 우측 (남향)
 
 local monitor = peripheral.find("monitor")

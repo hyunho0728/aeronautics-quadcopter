@@ -32,6 +32,7 @@ local MOTER_L = peripheral.wrap("Create_RotationSpeedController_11")
 
 local monitor = peripheral.wrap(MONITOR_SIDE) -- 모니터 연결
 local RELAY = peripheral.wrap("redstone_relay_14")
+local RELAY2 = peripheral.wrap("redstone_relay_15") -- 도킹 확인용
 
 if not MOTER_B then error("not found MOTER_B") end
 if not MOTER_R then error("not found MOTER_R") end
@@ -110,7 +111,7 @@ local function moveToPosition(targetX, targetZ, dt)
     
     local errX = math.abs(targetX - currentX)
     local errZ = math.abs(targetZ - currentZ)
-    local arrived = (errX < 0.3) and (errZ < 0.3) and (math.abs(velocity.x) < 0.05) and (math.abs(velocity.z) < 0.05)
+    local arrived = ((errX < 0.3) and (errZ < 0.3) and (math.abs(velocity.x) < 0.05) and (math.abs(velocity.z) < 0.05)) or RELAY2.getAnalogInput("right") == 15
     
     local velocity = sublevel.getLinearVelocity()
     helpers.displayLine(monitor, 20, string.format("velX : %.3f", velocity.x))
